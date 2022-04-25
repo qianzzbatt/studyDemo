@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置 QueryRunner   -->
+    <bean id="runner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype"/>
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 数据库连接信息 -->
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://121.5.233.51:3306/studydemo"/>
+        <property name="user" value="root"/>
+        <property name="password" value="admin"/>
+    </bean>
+
+</beans>

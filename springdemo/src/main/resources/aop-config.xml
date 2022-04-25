@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置目标类 -->
+    <bean id="userService" class="com.spring.study.service.impl.UserServiceImpl"/>
+
+    <!-- 定义前置通知-->
+    <bean id="userBeforeAdvice" class="com.spring.study.advice.UserBeforeAdvice"/>
+    <!-- 定义后置通知-->
+    <bean id="userAfterAdvice" class="com.spring.study.advice.UserBeforeAdvice"/>
+    <!-- 定义异常通知-->
+    <bean id="userThrowsAdvice" class="com.spring.study.advice.UserThrowsAdvice"/>
+    <!-- 定义环绕通知-->
+    <bean id="userAroundAdvice" class="com.spring.study.advice.UserAroundAdvice"/>
+
+    <!-- 定义代理类，名 称为userProxy，将通过userProxy访问业务类中的方法 -->
+    <bean id="userProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!-- 代理指向的目标接口  -->
+        <property name="proxyInterfaces" value="com.spring.study.service.UserService"/>
+        <property name="interceptorNames">
+            <list>
+                <value>userBeforeAdvice</value>
+                <!-- 织入后置通知 -->
+                <value>userAfterAdvice</value>
+                <!-- 织入异常通知 -->
+                <value>userThrowsAdvice</value>
+                <!-- 织入环绕通知 -->
+                <value>userAroundAdvice</value>
+            </list>
+        </property>
+        <property name="target" ref="userService"/>
+    </bean>
+
+    <!-- 自动配置 -->
+    <bean id="myServiceAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+                <value>userBeforeAdvice</value>
+            </list>
+        </property>
+        <!-- 匹配以Service结尾的类进行拦截增强 -->
+        <property name="beanNames">
+            <value>*Service</value>
+        </property>
+    </bean>
+
+</beans>

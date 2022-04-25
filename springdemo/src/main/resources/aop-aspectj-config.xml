@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 注册切面 -->
+    <bean id="userAspect" class="com.spring.study.aop.aspect.UserAspect"/>
+    <aop:config>
+        <!--设置切面-->
+        <aop:aspect  ref="userAspect">
+            <!--设置切点-->
+            <aop:pointcut id="allService"
+                          expression="execution(* com.spring.study.service.*.*(..))"/>
+            <!--设置通知类型以及切入点和调用切面的方法-->
+            <aop:before method="beforeProcessMethod" pointcut-ref="allService"/>
+            <!-- 后置返回通知 并返回结果 返回字段名字和参数名一致 -->
+            <aop:after-returning method="afterReturningProcessMethod" returning="value" pointcut-ref="allService"/>
+            <aop:around method="aroundProcessMethod" pointcut-ref="allService"/>
+            <!-- 后置异常通知 返回异常信息 这里ex的名字要和 afterThrowingEx方法的参数名保持一致 -->
+            <aop:after-throwing method="afterThrowingEx" throwing="ex" pointcut-ref="allService"/>
+            <!-- 后置通知 当方法执行完成并退出后，后置通知会被执行(而且是总会被执行) -->
+            <aop:after method="afterProcessMethod" pointcut-ref="allService"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
