@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Date 2022/4/24
  **/
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.rabbit.study.delay")
 public class RabbitApp {
 
     public static void main(String[] args) {

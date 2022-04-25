@@ -1,4 +1,4 @@
-package com.rabbit.study.ttl;
+package com.rabbit.study.delay;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -11,17 +11,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 死信队列
  * @author huangquan
  * @Date 2022/4/25
  *
- * 一般消息变成死信消息有如下几种情况：
- *  消息被拒绝(Basic.Reject/Basic.Nack) ，井且设置requeue 参数为false
- *  消息过期
- *  队列达到最大长度
+ * 死信队列实现延时
  **/
 @Configuration
 public class DlxQueueConfig {
+    /**
+     * 可能导致多个重名的exchangeh和队列 需要刷新或设置唯一标识
+     */
     public static final String JAVABOY_QUEUE_NAME = "javaboy_queue_name";
     public static final String JAVABOY_EXCHANGE_NAME = "javaboy_exchange_name";
     public static final String JAVABOY_ROUTING_KEY = "javaboy_routing_key";
@@ -64,7 +63,6 @@ public class DlxQueueConfig {
     @Bean
     Queue javaboyQueue() {
         Map<String, Object> args = new HashMap<>();
-        //配置消息队列时，为消息队列指定死信队列
         //设置消息过期时间
         args.put("x-message-ttl", 1000*10);
         //设置死信交换机

@@ -1,31 +1,48 @@
 package api;
 
 import com.rabbit.study.RabbitApp;
-import com.rabbit.study.config.*;
+import com.rabbit.study.config.RabbitDirectConfig;
+import com.rabbit.study.config.RabbitFanoutConfig;
+import com.rabbit.study.config.RabbitHeaderConfig;
+import com.rabbit.study.config.RabbitTopicConfig;
+import com.rabbit.study.delay.DlxQueueConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 @SpringBootTest(classes = RabbitApp.class)
+
 class RabbitmqdemoApplicationTests {
 
-    @Resource
+    @Autowired
     RabbitTemplate rabbitTemplate;
 
 
     @Test
-    void contextLoads() {
+    void contextLoads() throws UnsupportedEncodingException {
         //默认的直连交换机（DirectExchange）:
         /*DirectExchange 的路由策略是将消息队列绑定到一个 DirectExchange 上，
          当一条消息到达 DirectExchange 时会被转发到与该条消息 routing key 相同的 Queue 上，
          例如消息队列名为 “hello-queue”，则 routingkey 为 “hello-queue” 的消息会被该消息队列接收*/
-        for (int i = 0; i < 10; i++) {
-            rabbitTemplate.convertAndSend(HelloWorldConfig.HELLO_WORLD_QUEUE_NAME, "hello");
-        }
+//        for (int i = 0; i < 10; i++) {
+//            rabbitTemplate.convertAndSend(HelloWorldConfig.HELLO_WORLD_QUEUE_NAME, "hello");
+//        }
+
+        System.out.println(new Date());
+        rabbitTemplate.convertAndSend(DlxQueueConfig.JAVABOY_EXCHANGE_NAME, DlxQueueConfig.JAVABOY_ROUTING_KEY, "hello javaboy!");
+
+        /*MessageProperties mp = new MessageProperties();
+        String strmsg =  "我将在" + 3 + "s后过期，开始时间为：" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        // 设置过期时间
+        mp.setDelay(1000*3);
+        Message message = new Message(strmsg.getBytes(), mp);
+        rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, RabbitConfig.QUEUE_NAME, message);*/
     }
 
     @Test
