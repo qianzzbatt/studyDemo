@@ -7,8 +7,12 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author admin
+ */
 @Configuration
 public class RabbitDirectConfig {
+
     public final static String DIRECTNAME = "javaboy-direct";
 
     @Bean

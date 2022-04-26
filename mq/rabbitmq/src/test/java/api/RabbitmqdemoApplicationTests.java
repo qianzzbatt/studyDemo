@@ -23,7 +23,6 @@ class RabbitmqdemoApplicationTests {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-
     @Test
     void contextLoads() throws UnsupportedEncodingException {
         //默认的直连交换机（DirectExchange）:

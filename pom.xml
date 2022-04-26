@@ -13,6 +13,7 @@
         <module>springdemo</module>
         <module>springbootdemo</module>
         <module>mq</module>
+        <module>javabasic</module>
     </modules>
 
     <properties>
