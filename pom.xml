@@ -15,6 +15,7 @@
         <module>mq</module>
         <module>javabasic</module>
         <module>jdbc</module>
+        <module>nettydemo</module>
     </modules>
 
     <properties>
@@ -24,6 +25,7 @@
         <spring-boot.version>2.6.4</spring-boot.version>
         <spring-version>5.3.16</spring-version>
         <xxl-job-version>2.3.0</xxl-job-version>
+        <netty_version>4.1.36.Final</netty_version>
     </properties>
 
     <!--dependencyManagement 标签用于控制子模块的依赖版本等信息 -->
@@ -42,6 +44,11 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty_version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
