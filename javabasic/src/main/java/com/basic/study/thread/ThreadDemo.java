@@ -13,7 +13,19 @@ public class ThreadDemo {
 
 
     public static void main(String[] args) throws Exception {
-        testUnSafeExample();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
+        new Thread(){
+            @Override
+            public void run() {
+                System.out.println("Thread's run method is running");
+            }
+        }.start();
+//        testUnSafeExample();
     }
 
     /**
@@ -35,5 +47,7 @@ public class ThreadDemo {
         executorService.shutdown();
         System.out.println(example.get());
     }
+
+
 
 }

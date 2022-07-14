@@ -26,6 +26,13 @@
         <xxl-job-version>2.3.0</xxl-job-version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
     <!--dependencyManagement 标签用于控制子模块的依赖版本等信息 -->
     <!-- 该标签只用来控制版本，不能将依赖引入 -->
     <dependencyManagement>
@@ -42,6 +49,11 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.7.15</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
